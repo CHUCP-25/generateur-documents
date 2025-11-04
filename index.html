@@ -2018,1149 +2018,1155 @@
         }
 
         // --- LOGIQUE POUR INVITATION SOUS-COMMISSION ---
+  
         function initializeInvitationSousCommission() {
-            // Initialisation de jsPDF
-            const { jsPDF } = window.jspdf;
-            
-            // Données des destinataires préchargés avec "Professeur en" ajouté
-            const preloadedRecipients = [
-                { name: "Pr. ABBAOUI SANAE", role: "Professeur en Anatomie Pathologique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ABDALA SELMA", role: "Professeur en Pneumologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ADALI NAWAL", role: "Professeur en Neurologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AJDI FARIDA", role: "Professeur en Endocrinologie et maladies métaboliques au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AKEBOUR KHADIJA", role: "Professeur en Psychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AMAOUI BOUCHRA", role: "Professeur en Radiothérapie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AMMOR FATIMA ZAHRA", role: "Professeur en Chirurgie Thoracique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AMMOURI SAFAA", role: "Professeur en Gynécologie Obstétrique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ANIBAR SARA", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AQODAD NOURDIN", role: "Professeur en Gastro-entérologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ARRAYHANI MOHAMED", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AZOUAOUI M'BAREK", role: "Professeur en Gastro-entérologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BADDOUH NAIMA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BAKKALI ABDERRAHMANE", role: "Professeur en Chirurgie cardiovasculaire au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. AHMED EL ADAOUI", role: "Professeur en Chirurgie cardiovasculaire au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BENHADDA HICHAM", role: "Professeur en Médecine Légale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BENHOUMMAD OTHMANE", role: "Professeur en ORL au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BENLENDA OTHMANE", role: "Professeur en Anesthésie réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BENMASSAOUD ZINEB", role: "Professeur en Chirurgie Pédiatrique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BENYAICH ZAKARIAE", role: "Professeur en Neurochirurgie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BERRAJAA MEHDI", role: "Professeur en Cardiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BOUABDALLAOUI AMINE", role: "Professeur en Anesthésie-Réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BOUCHOUAL MOHAMMED", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BOUISSAR WASSILA", role: "Professeur en Médecine Interne au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. BOUSLOUS NABIL", role: "Professeur en Ophtalmologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. CHACHI EL MOSTAFA", role: "Professeur en Chimie -Biochimie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. CHAIT YASSINE", role: "Professeur en Gastro-Entérologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. CHAKIRI RADIA", role: "Professeur en Dermatologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. CHAKRI IMAD", role: "Professeur en Informatique Médicale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. CHERRABI HIND", role: "Professeur en Chirurgie Pédiatrique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. DAMOUN IKRAM", role: "Professeur en Endocrinologie et maladies métaboliques au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. DAOUDI ABDELLATIF", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. DAOUDI NAIMA", role: "Professeur en Microbiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. DERGAMOUN HAMZA", role: "Professeur en Urologie (Anatomie) au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. DOUFIK JALAL", role: "Professeur en Psychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL FAKIRI MOHAMED MEHDI", role: "Professeur en Anatomie (ORL) au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL FANE MOUNA", role: "Professeur en Maladies infectieuses au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL HYAOUI HICHAM", role: "Professeur en Traumato-Orthopédie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL MAATAOUI AISSAM", role: "Professeur en Biochimie médicale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL MEKKAOUI ADEL", role: "Professeur en Anésthésie et réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL MINAOUI MOHAMED", role: "Professeur en Cardiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EL MRIMAR NADIA", role: "Professeur en Hématologie Biologique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ELFAROUQI ABDALLAH", role: "Professeur en Gynécologie Obstétrique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ELMEHDI MAIDI", role: "Professeur en Chirurgie Thoracique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ERRAOUI MARIAM", role: "Professeur en Rhumatologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. EZZARIGA NIHAL", role: "Professeur en Microbiologie -Virologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. FARES SALMA", role: "Professeur en Hématologie Clinique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. HADDARI FATIMA-ZAHRA", role: "Professeur en Anesthésie-Réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. HAMRI SALIHA", role: "Professeur en Pédopsychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. JABRANE MAROUANE", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. KASSIMI HASSAN", role: "Professeur en Médecine physique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. KHABBAL YOUSSEF", role: "Professeur en Pharmacologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. KHARROUBI ABDELKARIM", role: "Professeur en Chirurgie Vasculaire Périphérique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. KHAYER SARA", role: "Professeur en Maladies infectieuses au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. KHAYI FATIMA-EZZAHRA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. LAADAMI SARA", role: "Professeur en Neurologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. LAHLOU LAILA", role: "Professeur en Médecine Communautaire préventive, santé publique et hygiène au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. LEFQIH IMANE", role: "Professeur en Anatomie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. LEMKHENTE ZOHRA", role: "Professeur en Parasitologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. LMEJJATI MOHAMED", role: "Professeur en Neurochirurgie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. MADANI AYOUB", role: "Professeur en Chirurgie Générale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. MIRY ACHREF", role: "Professeur en Anatomie Pathologique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. MOUBACHIR HOUDA", role: "Professeur en Pneumologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. MOUSTAINE MOULAY OMAR", role: "Professeur en Ophtalmologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. NAINIA KHALILA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. NAJI YAHYA", role: "Professeur en Neurologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. NASSIK HICHAM", role: "Professeur en Anesthésie réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. OQBANI KENZA", role: "Professeur en Anatomie pathologique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. OUAZNI MOHAMMED", role: "Professeur en Chirurgie viscérale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. OUKHOUYA MOHAMED AMINE", role: "Professeur en Chirurgie Pédiatrique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. RAFIQI KAMAL", role: "Professeur en Traumato-orthopédie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. RAIS GHIZLANE", role: "Professeur en Oncologie Médicale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. RAMMOUZ ISMAIL", role: "Professeur en Psychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. RHARS AMAL", role: "Professeur en Parasitologie – Mycologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. RIDA FATIMA EZZAHRA", role: "Professeur en Hématologie Clinique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SAFINI FATIMA", role: "Professeur en Radiothérapie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SAOULI AMINE", role: "Professeur en Urologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SAYAD ZAHRA", role: "Professeur en Stomatologie et chirurgie maxillo-faciale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SEFRIOUI TAHA ISMAIL", role: "Professeur en Oto-Rhino-Laryngologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SERBATI NADIA", role: "Professeur en Génétique au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SERHANE HIND", role: "Professeur en Pneumologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. SOUFI MEHDI", role: "Professeur en Chirurgie viscérale au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. TAOUIHAR SALMA", role: "Professeur en Anesthésie-Réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. TIZKI SAMIRA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. WAKRIM SOUKAINA", role: "Professeur en Radiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. WAZAREN HICHAM", role: "Professeur en Chirurgie Cardiovasculaire au Centre Hospitalo-Universitaire de Souss-Massa" },
-                { name: "Pr. ZIOUZIOU IMAD", role: "Professeur en Urologie au Centre Hospitalo-Universitaire de Souss-Massa" }
-            ];
+    // Initialisation de jsPDF
+    const { jsPDF } = window.jspdf;
+    
+    // Données des destinataires préchargés avec "Professeur en" ajouté
+    const preloadedRecipients = [
+        { name: "Pr. ABBAOUI SANAE", role: "Professeur en Anatomie Pathologique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ABDALA SELMA", role: "Professeur en Pneumologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ADALI NAWAL", role: "Professeur en Neurologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AJDI FARIDA", role: "Professeur en Endocrinologie et maladies métaboliques au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AKEBOUR KHADIJA", role: "Professeur en Psychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AMAOUI BOUCHRA", role: "Professeur en Radiothérapie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AMMOR FATIMA ZAHRA", role: "Professeur en Chirurgie Thoracique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AMMOURI SAFAA", role: "Professeur en Gynécologie Obstétrique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ANIBAR SARA", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AQODAD NOURDIN", role: "Professeur en Gastro-entérologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ARRAYHANI MOHAMED", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AZOUAOUI M'BAREK", role: "Professeur en Gastro-entérologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BADDOUH NAIMA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BAKKALI ABDERRAHMANE", role: "Professeur en Chirurgie cardiovasculaire au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. AHMED EL ADAOUI", role: "Professeur en Chirurgie cardiovasculaire au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BENHADDA HICHAM", role: "Professeur en Médecine Légale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BENHOUMMAD OTHMANE", role: "Professeur en ORL au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BENLENDA OTHMANE", role: "Professeur en Anesthésie réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BENMASSAOUD ZINEB", role: "Professeur en Chirurgie Pédiatrique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BENYAICH ZAKARIAE", role: "Professeur en Neurochirurgie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BERRAJAA MEHDI", role: "Professeur en Cardiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BOUABDALLAOUI AMINE", role: "Professeur en Anesthésie-Réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BOUCHOUAL MOHAMMED", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BOUISSAR WASSILA", role: "Professeur en Médecine Interne au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. BOUSLOUS NABIL", role: "Professeur en Ophtalmologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. CHACHI EL MOSTAFA", role: "Professeur en Chimie -Biochimie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. CHAIT YASSINE", role: "Professeur en Gastro-Entérologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. CHAKIRI RADIA", role: "Professeur en Dermatologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. CHAKRI IMAD", role: "Professeur en Informatique Médicale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. CHERRABI HIND", role: "Professeur en Chirurgie Pédiatrique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. DAMOUN IKRAM", role: "Professeur en Endocrinologie et maladies métaboliques au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. DAOUDI ABDELLATIF", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. DAOUDI NAIMA", role: "Professeur en Microbiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. DERGAMOUN HAMZA", role: "Professeur en Urologie (Anatomie) au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. DOUFIK JALAL", role: "Professeur en Psychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL FAKIRI MOHAMED MEHDI", role: "Professeur en Anatomie (ORL) au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL FANE MOUNA", role: "Professeur en Maladies infectieuses au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL HYAOUI HICHAM", role: "Professeur en Traumato-Orthopédie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL MAATAOUI AISSAM", role: "Professeur en Biochimie médicale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL MEKKAOUI ADEL", role: "Professeur en Anésthésie et réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL MINAOUI MOHAMED", role: "Professeur en Cardiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EL MRIMAR NADIA", role: "Professeur en Hématologie Biologique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ELFAROUQI ABDALLAH", role: "Professeur en Gynécologie Obstétrique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ELMEHDI MAIDI", role: "Professeur en Chirurgie Thoracique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ERRAOUI MARIAM", role: "Professeur en Rhumatologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. EZZARIGA NIHAL", role: "Professeur en Microbiologie -Virologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. FARES SALMA", role: "Professeur en Hématologie Clinique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. HADDARI FATIMA-ZAHRA", role: "Professeur en Anesthésie-Réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. HAMRI SALIHA", role: "Professeur en Pédopsychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. JABRANE MAROUANE", role: "Professeur en Néphrologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. KASSIMI HASSAN", role: "Professeur en Médecine physique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. KHABBAL YOUSSEF", role: "Professeur en Pharmacologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. KHARROUBI ABDELKARIM", role: "Professeur en Chirurgie Vasculaire Périphérique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. KHAYER SARA", role: "Professeur en Maladies infectieuses au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. KHAYI FATIMA-EZZAHRA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. LAADAMI SARA", role: "Professeur en Neurologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. LAHLOU LAILA", role: "Professeur en Médecine Communautaire préventive, santé publique et hygiène au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. LEFQIH IMANE", role: "Professeur en Anatomie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. LEMKHENTE ZOHRA", role: "Professeur en Parasitologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. LMEJJATI MOHAMED", role: "Professeur en Neurochirurgie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. MADANI AYOUB", role: "Professeur en Chirurgie Générale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. MIRY ACHREF", role: "Professeur en Anatomie Pathologique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. MOUBACHIR HOUDA", role: "Professeur en Pneumologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. MOUSTAINE MOULAY OMAR", role: "Professeur en Ophtalmologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. NAINIA KHALILA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. NAJI YAHYA", role: "Professeur en Neurologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. NASSIK HICHAM", role: "Professeur en Anesthésie réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. OQBANI KENZA", role: "Professeur en Anatomie pathologique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. OUAZNI MOHAMMED", role: "Professeur en Chirurgie viscérale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. OUKHOUYA MOHAMED AMINE", role: "Professeur en Chirurgie Pédiatrique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. RAFIQI KAMAL", role: "Professeur en Traumato-orthopédie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. RAIS GHIZLANE", role: "Professeur en Oncologie Médicale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. RAMMOUZ ISMAIL", role: "Professeur en Psychiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. RHARS AMAL", role: "Professeur en Parasitologie – Mycologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. RIDA FATIMA EZZAHRA", role: "Professeur en Hématologie Clinique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SAFINI FATIMA", role: "Professeur en Radiothérapie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SAOULI AMINE", role: "Professeur en Urologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SAYAD ZAHRA", role: "Professeur en Stomatologie et chirurgie maxillo-faciale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SEFRIOUI TAHA ISMAIL", role: "Professeur en Oto-Rhino-Laryngologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SERBATI NADIA", role: "Professeur en Génétique au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SERHANE HIND", role: "Professeur en Pneumologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. SOUFI MEHDI", role: "Professeur en Chirurgie viscérale au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. TAOUIHAR SALMA", role: "Professeur en Anesthésie-Réanimation au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. TIZKI SAMIRA", role: "Professeur en Pédiatrie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. WAKRIM SOUKAINA", role: "Professeur en Radiologie au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. WAZAREN HICHAM", role: "Professeur en Chirurgie Cardiovasculaire au Centre Hospitalo-Universitaire de Souss-Massa" },
+        { name: "Pr. ZIOUZIOU IMAD", role: "Professeur en Urologie au Centre Hospitalo-Universitaire de Souss-Massa" }
+    ];
 
-            // Trier les destinataires par ordre alphabétique
-            preloadedRecipients.sort((a, b) => a.name.localeCompare(b.name));
+    // Trier les destinataires par ordre alphabétique
+    preloadedRecipients.sort((a, b) => a.name.localeCompare(b.name));
+    
+    // Données de l'application
+    let recipients = [];
+    let recipientsAlloti = [];
+    
+    // Variables pour l'édition et la pagination
+    let editingIndex = -1;
+    let editingIndexAlloti = -1;
+    let currentPage = 0;
+    let viewAllMode = false;
+    let currentMode = 'lot-unique'; // 'lot-unique' ou 'alloti'
+    
+    // Éléments DOM
+    // Mode Lot Unique
+    const dateTimeInput = document.getElementById('dateTime');
+    const locationInput = document.getElementById('location');
+    const examenTypeInput = document.getElementById('examenType');
+    const referenceInput = document.getElementById('reference');
+    const objectInput = document.getElementById('object');
+    const offerTypeInput = document.getElementById('offerType');
+    const recipientNameInput = document.getElementById('recipientName');
+    const recipientRoleInput = document.getElementById('recipientRole');
+    const searchRecipientInput = document.getElementById('searchRecipient');
+    const selectRecipient = document.getElementById('selectRecipient');
+    const suggestionsLotUnique = document.getElementById('suggestionsLotUnique');
+    const addRecipientBtn = document.getElementById('addRecipient');
+    const recipientsList = document.getElementById('recipientsList');
+    const dayInput = document.getElementById('day');
+    const monthInput = document.getElementById('month');
+    const yearInput = document.getElementById('year');
+    const hourInput = document.getElementById('hour');
+    const minuteInput = document.getElementById('minute');
+    
+    // Mode Alloti
+    const dateTimeInputAlloti = document.getElementById('dateTimeAlloti');
+    const locationInputAlloti = document.getElementById('locationAlloti');
+    const examenTypeInputAlloti = document.getElementById('examenTypeAlloti');
+    const referenceInputAlloti = document.getElementById('referenceAlloti');
+    const objectInputAlloti = document.getElementById('objectAlloti');
+    const offerTypeInputAlloti = document.getElementById('offerTypeAlloti');
+    const recipientNameInputAlloti = document.getElementById('recipientNameAlloti');
+    const recipientRoleInputAlloti = document.getElementById('recipientRoleAlloti');
+    const searchRecipientInputAlloti = document.getElementById('searchRecipientAlloti');
+    const selectRecipientAlloti = document.getElementById('selectRecipientAlloti');
+    const suggestionsAlloti = document.getElementById('suggestionsAlloti');
+    const addRecipientBtnAlloti = document.getElementById('addRecipientAlloti');
+    const recipientsListAlloti = document.getElementById('recipientsListAlloti');
+    const lotsInput = document.getElementById('lots');
+    const lotsError = document.getElementById('lotsError');
+    const dayInputAlloti = document.getElementById('dayAlloti');
+    const monthInputAlloti = document.getElementById('monthAlloti');
+    const yearInputAlloti = document.getElementById('yearAlloti');
+    const hourInputAlloti = document.getElementById('hourAlloti');
+    const minuteInputAlloti = document.getElementById('minuteAlloti');
+    
+    // Éléments communs
+    const btnLotUnique = document.getElementById('btnLotUnique');
+    const btnAlloti = document.getElementById('btnAlloti');
+    const sectionLotUnique = document.getElementById('sectionLotUnique');
+    const sectionAlloti = document.getElementById('sectionAlloti');
+    const previewRecipientSelect = document.getElementById('previewRecipient');
+    const invitationDocument = document.getElementById('invitationDocument');
+    const generatePdfBtn = document.getElementById('generatePdf');
+    const generateAllPdfBtn = document.getElementById('generateAllPdf');
+    const generateAllPdfBtnAlloti = document.getElementById('generateAllPdfAlloti');
+    const viewAllBtn = document.getElementById('viewAll');
+    const viewAllBtnAlloti = document.getElementById('viewAllAlloti');
+    const paginationDiv = document.getElementById('pagination');
+    const prevPageBtn = document.getElementById('prevPage');
+    const nextPageBtn = document.getElementById('nextPage');
+    const pageInfoSpan = document.getElementById('pageInfo');
+    const globalError = document.getElementById('globalError');
+    
+    // Fonction d'initialisation des composants
+    function initializeInvitationComponents() {
+        updateRecipientsList();
+        updateRecipientsListAlloti();
+        updatePreviewRecipientSelect();
+        initializeSelectRecipients();
+        
+        // Ajouter l'option "Voir tout" au sélecteur en premier
+        const viewAllOption = document.createElement('option');
+        viewAllOption.value = "all";
+        viewAllOption.textContent = "Voir tout";
+        previewRecipientSelect.appendChild(viewAllOption);
+        
+        // Initialiser la recherche de destinataires
+        initializeSearch();
+        
+        // Afficher un message si aucun destinataire
+        if (recipients.length === 0 && recipientsAlloti.length === 0) {
+            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
+        }
+    }
+
+    // Initialiser les sélecteurs de destinataires
+    function initializeSelectRecipients() {
+        // Mode Lot Unique
+        selectRecipient.innerHTML = '<option value="">Choisir un destinataire</option>';
+        preloadedRecipients.forEach(recipient => {
+            const option = document.createElement('option');
+            option.value = recipient.name;
+            option.textContent = recipient.name;
+            selectRecipient.appendChild(option);
+        });
+        
+        // Mode Alloti
+        selectRecipientAlloti.innerHTML = '<option value="">Choisir un destinataire</option>';
+        preloadedRecipients.forEach(recipient => {
+            const option = document.createElement('option');
+            option.value = recipient.name;
+            option.textContent = recipient.name;
+            selectRecipientAlloti.appendChild(option);
+        });
+    }
+    
+    // Changer de mode
+    btnLotUnique.addEventListener('click', function() {
+        currentMode = 'lot-unique';
+        btnLotUnique.classList.add('active');
+        btnAlloti.classList.remove('active');
+        sectionLotUnique.classList.remove('hidden');
+        sectionAlloti.classList.add('hidden');
+        updatePreviewRecipientSelect();
+        initializeInvitationComponents(); // Réinitialiser les composants
+        if (recipients.length > 0) {
+            renderInvitation(0);
+            previewRecipientSelect.value = 0;
+        } else {
+            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
+        }
+    });
+    
+    btnAlloti.addEventListener('click', function() {
+        currentMode = 'alloti';
+        btnAlloti.classList.add('active');
+        btnLotUnique.classList.remove('active');
+        sectionAlloti.classList.remove('hidden');
+        sectionLotUnique.classList.add('hidden');
+        updatePreviewRecipientSelect();
+        initializeInvitationComponents(); // Réinitialiser les composants
+        if (recipientsAlloti.length > 0) {
+            renderInvitation(0);
+            previewRecipientSelect.value = 0;
+        } else {
+            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
+        }
+    });
+    
+    // Initialiser la recherche de destinataires avec suggestions
+    function initializeSearch() {
+        // Mode Lot Unique - Recherche
+        searchRecipientInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm.length < 2) {
+                suggestionsLotUnique.style.display = 'none';
+                return;
+            }
             
-            // Données de l'application
-            let recipients = [];
-            let recipientsAlloti = [];
+            const filtered = preloadedRecipients.filter(recipient => 
+                recipient.name.toLowerCase().includes(searchTerm) || 
+                recipient.role.toLowerCase().includes(searchTerm)
+            );
             
-            // Variables pour l'édition et la pagination
-            let editingIndex = -1;
-            let editingIndexAlloti = -1;
-            let currentPage = 0;
-            let viewAllMode = false;
-            let currentMode = 'lot-unique'; // 'lot-unique' ou 'alloti'
+            if (filtered.length > 0) {
+                suggestionsLotUnique.innerHTML = '';
+                filtered.forEach(recipient => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'suggestion-item';
+                    suggestionItem.innerHTML = `
+                        <div><strong>${recipient.name}</strong></div>
+                        <div style="font-size: 0.8em; color: #666;">${recipient.role}</div>
+                    `;
+                    suggestionItem.addEventListener('click', function() {
+                        addRecipientFromList(recipient, 'lot-unique');
+                        suggestionsLotUnique.style.display = 'none';
+                        searchRecipientInput.value = '';
+                    });
+                    suggestionsLotUnique.appendChild(suggestionItem);
+                });
+                suggestionsLotUnique.style.display = 'block';
+            } else {
+                suggestionsLotUnique.style.display = 'none';
+            }
+        });
+        
+        // Mode Lot Unique - Sélection
+        selectRecipient.addEventListener('change', function() {
+            if (this.value) {
+                const recipient = preloadedRecipients.find(r => r.name === this.value);
+                if (recipient) {
+                    addRecipientFromList(recipient, 'lot-unique');
+                    this.value = '';
+                }
+            }
+        });
+        
+        // Mode Alloti - Recherche
+        searchRecipientInputAlloti.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            if (searchTerm.length < 2) {
+                suggestionsAlloti.style.display = 'none';
+                return;
+            }
             
-            // Éléments DOM
-            // Mode Lot Unique
-            const dateTimeInput = document.getElementById('dateTime');
-            const locationInput = document.getElementById('location');
-            const examenTypeInput = document.getElementById('examenType');
-            const referenceInput = document.getElementById('reference');
-            const objectInput = document.getElementById('object');
-            const offerTypeInput = document.getElementById('offerType');
-            const recipientNameInput = document.getElementById('recipientName');
-            const recipientRoleInput = document.getElementById('recipientRole');
-            const searchRecipientInput = document.getElementById('searchRecipient');
-            const selectRecipient = document.getElementById('selectRecipient');
-            const suggestionsLotUnique = document.getElementById('suggestionsLotUnique');
-            const addRecipientBtn = document.getElementById('addRecipient');
-            const recipientsList = document.getElementById('recipientsList');
-            const dayInput = document.getElementById('day');
-            const monthInput = document.getElementById('month');
-            const yearInput = document.getElementById('year');
-            const hourInput = document.getElementById('hour');
-            const minuteInput = document.getElementById('minute');
+            const filtered = preloadedRecipients.filter(recipient => 
+                recipient.name.toLowerCase().includes(searchTerm) || 
+                recipient.role.toLowerCase().includes(searchTerm)
+            );
             
-            // Mode Alloti
-            const dateTimeInputAlloti = document.getElementById('dateTimeAlloti');
-            const locationInputAlloti = document.getElementById('locationAlloti');
-            const examenTypeInputAlloti = document.getElementById('examenTypeAlloti');
-            const referenceInputAlloti = document.getElementById('referenceAlloti');
-            const objectInputAlloti = document.getElementById('objectAlloti');
-            const offerTypeInputAlloti = document.getElementById('offerTypeAlloti');
-            const recipientNameInputAlloti = document.getElementById('recipientNameAlloti');
-            const recipientRoleInputAlloti = document.getElementById('recipientRoleAlloti');
-            const searchRecipientInputAlloti = document.getElementById('searchRecipientAlloti');
-            const selectRecipientAlloti = document.getElementById('selectRecipientAlloti');
-            const suggestionsAlloti = document.getElementById('suggestionsAlloti');
-            const addRecipientBtnAlloti = document.getElementById('addRecipientAlloti');
-            const recipientsListAlloti = document.getElementById('recipientsListAlloti');
-            const lotsInput = document.getElementById('lots');
-            const lotsError = document.getElementById('lotsError');
-            const dayInputAlloti = document.getElementById('dayAlloti');
-            const monthInputAlloti = document.getElementById('monthAlloti');
-            const yearInputAlloti = document.getElementById('yearAlloti');
-            const hourInputAlloti = document.getElementById('hourAlloti');
-            const minuteInputAlloti = document.getElementById('minuteAlloti');
-            
-            // Éléments communs
-            const btnLotUnique = document.getElementById('btnLotUnique');
-            const btnAlloti = document.getElementById('btnAlloti');
-            const sectionLotUnique = document.getElementById('sectionLotUnique');
-            const sectionAlloti = document.getElementById('sectionAlloti');
-            const previewRecipientSelect = document.getElementById('previewRecipient');
-            const invitationDocument = document.getElementById('invitationDocument');
-            const generatePdfBtn = document.getElementById('generatePdf');
-            const generateAllPdfBtn = document.getElementById('generateAllPdf');
-            const generateAllPdfBtnAlloti = document.getElementById('generateAllPdfAlloti');
-            const viewAllBtn = document.getElementById('viewAll');
-            const viewAllBtnAlloti = document.getElementById('viewAllAlloti');
-            const paginationDiv = document.getElementById('pagination');
-            const prevPageBtn = document.getElementById('prevPage');
-            const nextPageBtn = document.getElementById('nextPage');
-            const pageInfoSpan = document.getElementById('pageInfo');
-            const globalError = document.getElementById('globalError');
-            
-            // Initialisation
-            document.addEventListener('DOMContentLoaded', function() {
+            if (filtered.length > 0) {
+                suggestionsAlloti.innerHTML = '';
+                filtered.forEach(recipient => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.className = 'suggestion-item';
+                    suggestionItem.innerHTML = `
+                        <div><strong>${recipient.name}</strong></div>
+                        <div style="font-size: 0.8em; color: #666;">${recipient.role}</div>
+                    `;
+                    suggestionItem.addEventListener('click', function() {
+                        addRecipientFromList(recipient, 'alloti');
+                        suggestionsAlloti.style.display = 'none';
+                        searchRecipientInputAlloti.value = '';
+                    });
+                    suggestionsAlloti.appendChild(suggestionItem);
+                });
+                suggestionsAlloti.style.display = 'block';
+            } else {
+                suggestionsAlloti.style.display = 'none';
+            }
+        });
+        
+        // Mode Alloti - Sélection
+        selectRecipientAlloti.addEventListener('change', function() {
+            if (this.value) {
+                const recipient = preloadedRecipients.find(r => r.name === this.value);
+                if (recipient) {
+                    addRecipientFromList(recipient, 'alloti');
+                    this.value = '';
+                }
+            }
+        });
+        
+        // Cacher les suggestions en cliquant ailleurs
+        document.addEventListener('click', function(e) {
+            if (!searchRecipientInput.contains(e.target) && !suggestionsLotUnique.contains(e.target)) {
+                suggestionsLotUnique.style.display = 'none';
+            }
+            if (!searchRecipientInputAlloti.contains(e.target) && !suggestionsAlloti.contains(e.target)) {
+                suggestionsAlloti.style.display = 'none';
+            }
+        });
+    }
+    
+    // Ajouter un destinataire à partir de la liste préchargée
+    function addRecipientFromList(recipient, mode) {
+        if (mode === 'lot-unique') {
+            // Vérifier si le destinataire n'est pas déjà présent
+            const existingIndex = recipients.findIndex(r => r.name === recipient.name);
+            if (existingIndex === -1) {
+                recipients.push(recipient);
                 updateRecipientsList();
+                updatePreviewRecipientSelect();
+                
+                // Afficher le dernier destinataire dans l'aperçu
+                if (recipients.length > 0 && !viewAllMode) {
+                    const lastIndex = recipients.length - 1;
+                    renderInvitation(lastIndex);
+                    previewRecipientSelect.value = lastIndex;
+                }
+            } else {
+                alert('Ce destinataire est déjà dans la liste');
+            }
+        } else {
+            // Mode Alloti
+            // Vérifier si le destinataire n'est pas déjà présent
+            const existingIndex = recipientsAlloti.findIndex(r => r.name === recipient.name);
+            if (existingIndex === -1) {
+                recipientsAlloti.push(recipient);
                 updateRecipientsListAlloti();
                 updatePreviewRecipientSelect();
-                initializeSelectRecipients();
                 
-                // Ajouter l'option "Voir tout" au sélecteur en premier
-                const viewAllOption = document.createElement('option');
-                viewAllOption.value = "all";
-                viewAllOption.textContent = "Voir tout";
-                previewRecipientSelect.appendChild(viewAllOption);
-                
-                // Initialiser la recherche de destinataires
-                initializeSearch();
-                
-                // Afficher un message si aucun destinataire
-                if (recipients.length === 0) {
-                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
+                // Afficher le dernier destinataire dans l'aperçu
+                if (recipientsAlloti.length > 0 && !viewAllMode) {
+                    const lastIndex = recipientsAlloti.length - 1;
+                    renderInvitation(lastIndex);
+                    previewRecipientSelect.value = lastIndex;
                 }
-            });
-            
-            // Initialiser les sélecteurs de destinataires
-            function initializeSelectRecipients() {
-                // Mode Lot Unique
-                selectRecipient.innerHTML = '<option value="">Choisir un destinataire</option>';
-                preloadedRecipients.forEach(recipient => {
-                    const option = document.createElement('option');
-                    option.value = recipient.name;
-                    option.textContent = recipient.name;
-                    selectRecipient.appendChild(option);
-                });
-                
-                // Mode Alloti
-                selectRecipientAlloti.innerHTML = '<option value="">Choisir un destinataire</option>';
-                preloadedRecipients.forEach(recipient => {
-                    const option = document.createElement('option');
-                    option.value = recipient.name;
-                    option.textContent = recipient.name;
-                    selectRecipientAlloti.appendChild(option);
-                });
+            } else {
+                alert('Ce destinataire est déjà dans la liste');
+            }
+        }
+    }
+    
+    // Ajouter un destinataire personnalisé (Mode Lot Unique)
+    addRecipientBtn.addEventListener('click', function() {
+        const name = recipientNameInput.value.trim();
+        const role = recipientRoleInput.value.trim();
+        
+        if (name && role) {
+            if (editingIndex >= 0) {
+                // Modification d'un destinataire existant
+                recipients[editingIndex] = { name, role };
+                editingIndex = -1;
+                addRecipientBtn.textContent = 'Ajouter Destinataire';
+            } else {
+                // Ajout d'un nouveau destinataire
+                recipients.push({ name, role });
             }
             
-            // Changer de mode
-            btnLotUnique.addEventListener('click', function() {
-                currentMode = 'lot-unique';
-                btnLotUnique.classList.add('active');
-                btnAlloti.classList.remove('active');
-                sectionLotUnique.classList.remove('hidden');
-                sectionAlloti.classList.add('hidden');
+            updateRecipientsList();
+            updatePreviewRecipientSelect();
+            recipientNameInput.value = '';
+            recipientRoleInput.value = '';
+            searchRecipientInput.value = '';
+            
+            // Afficher le dernier destinataire dans l'aperçu
+            if (recipients.length > 0 && !viewAllMode) {
+                const lastIndex = recipients.length - 1;
+                renderInvitation(lastIndex);
+                previewRecipientSelect.value = lastIndex;
+            }
+        } else {
+            alert('Veuillez remplir le nom et la fonction du destinataire');
+        }
+    });
+    
+    // Ajouter un destinataire personnalisé (Mode Alloti)
+    addRecipientBtnAlloti.addEventListener('click', function() {
+        const name = recipientNameInputAlloti.value.trim();
+        const role = recipientRoleInputAlloti.value.trim();
+        
+        if (name && role) {
+            if (editingIndexAlloti >= 0) {
+                // Modification d'un destinataire existant
+                recipientsAlloti[editingIndexAlloti] = { name, role };
+                editingIndexAlloti = -1;
+                addRecipientBtnAlloti.textContent = 'Ajouter Destinataire';
+            } else {
+                // Ajout d'un nouveau destinataire
+                recipientsAlloti.push({ name, role });
+            }
+            
+            updateRecipientsListAlloti();
+            updatePreviewRecipientSelect();
+            recipientNameInputAlloti.value = '';
+            recipientRoleInputAlloti.value = '';
+            searchRecipientInputAlloti.value = '';
+            
+            // Afficher le dernier destinataire dans l'aperçu
+            if (recipientsAlloti.length > 0 && !viewAllMode) {
+                const lastIndex = recipientsAlloti.length - 1;
+                renderInvitation(lastIndex);
+                previewRecipientSelect.value = lastIndex;
+            }
+        } else {
+            alert('Veuillez remplir le nom et la fonction du destinataire');
+        }
+    });
+    
+    // Mettre à jour la liste des destinataires (Mode Lot Unique)
+    function updateRecipientsList() {
+        recipientsList.innerHTML = '';
+        
+        if (recipients.length === 0) {
+            recipientsList.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Aucun destinataire ajouté</p>';
+            return;
+        }
+        
+        recipients.forEach((recipient, index) => {
+            const recipientItem = document.createElement('div');
+            recipientItem.className = 'recipient-item';
+            
+            const recipientInfo = document.createElement('div');
+            recipientInfo.className = 'recipient-info-small';
+            recipientInfo.innerHTML = `
+                <div class="recipient-name-small">${recipient.name}</div>
+                <div class="recipient-role-small">${recipient.role}</div>
+            `;
+            
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'recipient-actions';
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'btn btn-warning btn-small';
+            editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+            editBtn.title = 'Modifier';
+            editBtn.addEventListener('click', function() {
+                recipientNameInput.value = recipient.name;
+                recipientRoleInput.value = recipient.role;
+                editingIndex = index;
+                addRecipientBtn.textContent = 'Modifier Destinataire';
+                // Positionner le curseur sur le champ du nom
+                recipientNameInput.focus();
+                recipientNameInput.select();
+            });
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger btn-small';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteBtn.title = 'Supprimer';
+            deleteBtn.addEventListener('click', function() {
+                recipients.splice(index, 1);
+                updateRecipientsList();
                 updatePreviewRecipientSelect();
-                if (recipients.length > 0) {
-                    renderInvitation(0);
-                    previewRecipientSelect.value = 0;
-                } else {
-                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
-                }
-            });
-            
-            btnAlloti.addEventListener('click', function() {
-                currentMode = 'alloti';
-                btnAlloti.classList.add('active');
-                btnLotUnique.classList.remove('active');
-                sectionAlloti.classList.remove('hidden');
-                sectionLotUnique.classList.add('hidden');
-                updatePreviewRecipientSelect();
-                if (recipientsAlloti.length > 0) {
-                    renderInvitation(0);
-                    previewRecipientSelect.value = 0;
-                } else {
-                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
-                }
-            });
-            
-            // Initialiser la recherche de destinataires avec suggestions
-            function initializeSearch() {
-                // Mode Lot Unique - Recherche
-                searchRecipientInput.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    if (searchTerm.length < 2) {
-                        suggestionsLotUnique.style.display = 'none';
-                        return;
-                    }
-                    
-                    const filtered = preloadedRecipients.filter(recipient => 
-                        recipient.name.toLowerCase().includes(searchTerm) || 
-                        recipient.role.toLowerCase().includes(searchTerm)
-                    );
-                    
-                    if (filtered.length > 0) {
-                        suggestionsLotUnique.innerHTML = '';
-                        filtered.forEach(recipient => {
-                            const suggestionItem = document.createElement('div');
-                            suggestionItem.className = 'suggestion-item';
-                            suggestionItem.innerHTML = `
-                                <div><strong>${recipient.name}</strong></div>
-                                <div style="font-size: 0.8em; color: #666;">${recipient.role}</div>
-                            `;
-                            suggestionItem.addEventListener('click', function() {
-                                addRecipientFromList(recipient, 'lot-unique');
-                                suggestionsLotUnique.style.display = 'none';
-                                searchRecipientInput.value = '';
-                            });
-                            suggestionsLotUnique.appendChild(suggestionItem);
-                        });
-                        suggestionsLotUnique.style.display = 'block';
-                    } else {
-                        suggestionsLotUnique.style.display = 'none';
-                    }
-                });
                 
-                // Mode Lot Unique - Sélection
-                selectRecipient.addEventListener('change', function() {
-                    if (this.value) {
-                        const recipient = preloadedRecipients.find(r => r.name === this.value);
-                        if (recipient) {
-                            addRecipientFromList(recipient, 'lot-unique');
-                            this.value = '';
-                        }
-                    }
-                });
-                
-                // Mode Alloti - Recherche
-                searchRecipientInputAlloti.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    if (searchTerm.length < 2) {
-                        suggestionsAlloti.style.display = 'none';
-                        return;
-                    }
-                    
-                    const filtered = preloadedRecipients.filter(recipient => 
-                        recipient.name.toLowerCase().includes(searchTerm) || 
-                        recipient.role.toLowerCase().includes(searchTerm)
-                    );
-                    
-                    if (filtered.length > 0) {
-                        suggestionsAlloti.innerHTML = '';
-                        filtered.forEach(recipient => {
-                            const suggestionItem = document.createElement('div');
-                            suggestionItem.className = 'suggestion-item';
-                            suggestionItem.innerHTML = `
-                                <div><strong>${recipient.name}</strong></div>
-                                <div style="font-size: 0.8em; color: #666;">${recipient.role}</div>
-                            `;
-                            suggestionItem.addEventListener('click', function() {
-                                addRecipientFromList(recipient, 'alloti');
-                                suggestionsAlloti.style.display = 'none';
-                                searchRecipientInputAlloti.value = '';
-                            });
-                            suggestionsAlloti.appendChild(suggestionItem);
-                        });
-                        suggestionsAlloti.style.display = 'block';
-                    } else {
-                        suggestionsAlloti.style.display = 'none';
-                    }
-                });
-                
-                // Mode Alloti - Sélection
-                selectRecipientAlloti.addEventListener('change', function() {
-                    if (this.value) {
-                        const recipient = preloadedRecipients.find(r => r.name === this.value);
-                        if (recipient) {
-                            addRecipientFromList(recipient, 'alloti');
-                            this.value = '';
-                        }
-                    }
-                });
-                
-                // Cacher les suggestions en cliquant ailleurs
-                document.addEventListener('click', function(e) {
-                    if (!searchRecipientInput.contains(e.target) && !suggestionsLotUnique.contains(e.target)) {
-                        suggestionsLotUnique.style.display = 'none';
-                    }
-                    if (!searchRecipientInputAlloti.contains(e.target) && !suggestionsAlloti.contains(e.target)) {
-                        suggestionsAlloti.style.display = 'none';
-                    }
-                });
-            }
-            
-            // Ajouter un destinataire à partir de la liste préchargée
-            function addRecipientFromList(recipient, mode) {
-                if (mode === 'lot-unique') {
-                    // Vérifier si le destinataire n'est pas déjà présent
-                    const existingIndex = recipients.findIndex(r => r.name === recipient.name);
-                    if (existingIndex === -1) {
-                        recipients.push(recipient);
-                        updateRecipientsList();
-                        updatePreviewRecipientSelect();
-                        
-                        // Afficher le dernier destinataire dans l'aperçu
-                        if (recipients.length > 0 && !viewAllMode) {
-                            const lastIndex = recipients.length - 1;
-                            renderInvitation(lastIndex);
-                            previewRecipientSelect.value = lastIndex;
-                        }
-                    } else {
-                        alert('Ce destinataire est déjà dans la liste');
-                    }
-                } else {
-                    // Mode Alloti
-                    // Vérifier si le destinataire n'est pas déjà présent
-                    const existingIndex = recipientsAlloti.findIndex(r => r.name === recipient.name);
-                    if (existingIndex === -1) {
-                        recipientsAlloti.push(recipient);
-                        updateRecipientsListAlloti();
-                        updatePreviewRecipientSelect();
-                        
-                        // Afficher le dernier destinataire dans l'aperçu
-                        if (recipientsAlloti.length > 0 && !viewAllMode) {
-                            const lastIndex = recipientsAlloti.length - 1;
-                            renderInvitation(lastIndex);
-                            previewRecipientSelect.value = lastIndex;
-                        }
-                    } else {
-                        alert('Ce destinataire est déjà dans la liste');
-                    }
-                }
-            }
-            
-            // Ajouter un destinataire personnalisé (Mode Lot Unique)
-            addRecipientBtn.addEventListener('click', function() {
-                const name = recipientNameInput.value.trim();
-                const role = recipientRoleInput.value.trim();
-                
-                if (name && role) {
-                    if (editingIndex >= 0) {
-                        // Modification d'un destinataire existant
-                        recipients[editingIndex] = { name, role };
-                        editingIndex = -1;
-                        addRecipientBtn.textContent = 'Ajouter Destinataire';
-                    } else {
-                        // Ajout d'un nouveau destinataire
-                        recipients.push({ name, role });
-                    }
-                    
-                    updateRecipientsList();
-                    updatePreviewRecipientSelect();
+                // Si on supprime le destinataire en cours d'édition
+                if (editingIndex === index) {
+                    editingIndex = -1;
+                    addRecipientBtn.textContent = 'Ajouter Destinataire';
                     recipientNameInput.value = '';
                     recipientRoleInput.value = '';
-                    searchRecipientInput.value = '';
-                    
-                    // Afficher le dernier destinataire dans l'aperçu
-                    if (recipients.length > 0 && !viewAllMode) {
-                        const lastIndex = recipients.length - 1;
-                        renderInvitation(lastIndex);
-                        previewRecipientSelect.value = lastIndex;
-                    }
-                } else {
-                    alert('Veuillez remplir le nom et la fonction du destinataire');
-                }
-            });
-            
-            // Ajouter un destinataire personnalisé (Mode Alloti)
-            addRecipientBtnAlloti.addEventListener('click', function() {
-                const name = recipientNameInputAlloti.value.trim();
-                const role = recipientRoleInputAlloti.value.trim();
-                
-                if (name && role) {
-                    if (editingIndexAlloti >= 0) {
-                        // Modification d'un destinataire existant
-                        recipientsAlloti[editingIndexAlloti] = { name, role };
-                        editingIndexAlloti = -1;
-                        addRecipientBtnAlloti.textContent = 'Ajouter Destinataire';
-                    } else {
-                        // Ajout d'un nouveau destinataire
-                        recipientsAlloti.push({ name, role });
-                    }
-                    
-                    updateRecipientsListAlloti();
-                    updatePreviewRecipientSelect();
-                    recipientNameInputAlloti.value = '';
-                    recipientRoleInputAlloti.value = '';
-                    searchRecipientInputAlloti.value = '';
-                    
-                    // Afficher le dernier destinataire dans l'aperçu
-                    if (recipientsAlloti.length > 0 && !viewAllMode) {
-                        const lastIndex = recipientsAlloti.length - 1;
-                        renderInvitation(lastIndex);
-                        previewRecipientSelect.value = lastIndex;
-                    }
-                } else {
-                    alert('Veuillez remplir le nom et la fonction du destinataire');
-                }
-            });
-            
-            // Mettre à jour la liste des destinataires (Mode Lot Unique)
-            function updateRecipientsList() {
-                recipientsList.innerHTML = '';
-                
-                if (recipients.length === 0) {
-                    recipientsList.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Aucun destinataire ajouté</p>';
-                    return;
                 }
                 
-                recipients.forEach((recipient, index) => {
-                    const recipientItem = document.createElement('div');
-                    recipientItem.className = 'recipient-item';
-                    
-                    const recipientInfo = document.createElement('div');
-                    recipientInfo.className = 'recipient-info-small';
-                    recipientInfo.innerHTML = `
-                        <div class="recipient-name-small">${recipient.name}</div>
-                        <div class="recipient-role-small">${recipient.role}</div>
-                    `;
-                    
-                    const actionsDiv = document.createElement('div');
-                    actionsDiv.className = 'recipient-actions';
-                    
-                    const editBtn = document.createElement('button');
-                    editBtn.className = 'btn btn-warning btn-small';
-                    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                    editBtn.title = 'Modifier';
-                    editBtn.addEventListener('click', function() {
-                        recipientNameInput.value = recipient.name;
-                        recipientRoleInput.value = recipient.role;
-                        editingIndex = index;
-                        addRecipientBtn.textContent = 'Modifier Destinataire';
-                        // Positionner le curseur sur le champ du nom
-                        recipientNameInput.focus();
-                        recipientNameInput.select();
-                    });
-                    
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'btn btn-danger btn-small';
-                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                    deleteBtn.title = 'Supprimer';
-                    deleteBtn.addEventListener('click', function() {
-                        recipients.splice(index, 1);
-                        updateRecipientsList();
-                        updatePreviewRecipientSelect();
-                        
-                        // Si on supprime le destinataire en cours d'édition
-                        if (editingIndex === index) {
-                            editingIndex = -1;
-                            addRecipientBtn.textContent = 'Ajouter Destinataire';
-                            recipientNameInput.value = '';
-                            recipientRoleInput.value = '';
-                        }
-                        
-                        // Afficher le premier destinataire si disponible
-                        if (recipients.length > 0 && !viewAllMode) {
-                            renderInvitation(0);
-                            previewRecipientSelect.value = 0;
-                        } else {
-                            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
-                        }
-                    });
-                    
-                    actionsDiv.appendChild(editBtn);
-                    actionsDiv.appendChild(deleteBtn);
-                    
-                    recipientItem.appendChild(recipientInfo);
-                    recipientItem.appendChild(actionsDiv);
-                    recipientsList.appendChild(recipientItem);
-                });
-            }
-            
-            // Mettre à jour la liste des destinataires (Mode Alloti)
-            function updateRecipientsListAlloti() {
-                recipientsListAlloti.innerHTML = '';
-                
-                if (recipientsAlloti.length === 0) {
-                    recipientsListAlloti.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Aucun destinataire ajouté</p>';
-                    return;
-                }
-                
-                recipientsAlloti.forEach((recipient, index) => {
-                    const recipientItem = document.createElement('div');
-                    recipientItem.className = 'recipient-item';
-                    
-                    const recipientInfo = document.createElement('div');
-                    recipientInfo.className = 'recipient-info-small';
-                    recipientInfo.innerHTML = `
-                        <div class="recipient-name-small">${recipient.name}</div>
-                        <div class="recipient-role-small">${recipient.role}</div>
-                    `;
-                    
-                    const actionsDiv = document.createElement('div');
-                    actionsDiv.className = 'recipient-actions';
-                    
-                    const editBtn = document.createElement('button');
-                    editBtn.className = 'btn btn-warning btn-small';
-                    editBtn.innerHTML = '<i class="fas fa-edit"></i>';
-                    editBtn.title = 'Modifier';
-                    editBtn.addEventListener('click', function() {
-                        recipientNameInputAlloti.value = recipient.name;
-                        recipientRoleInputAlloti.value = recipient.role;
-                        editingIndexAlloti = index;
-                        addRecipientBtnAlloti.textContent = 'Modifier Destinataire';
-                        // Positionner le curseur sur le champ du nom
-                        recipientNameInputAlloti.focus();
-                        recipientNameInputAlloti.select();
-                    });
-                    
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.className = 'btn btn-danger btn-small';
-                    deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
-                    deleteBtn.title = 'Supprimer';
-                    deleteBtn.addEventListener('click', function() {
-                        recipientsAlloti.splice(index, 1);
-                        updateRecipientsListAlloti();
-                        updatePreviewRecipientSelect();
-                        
-                        // Si on supprime le destinataire en cours d'édition
-                        if (editingIndexAlloti === index) {
-                            editingIndexAlloti = -1;
-                            addRecipientBtnAlloti.textContent = 'Ajouter Destinataire';
-                            recipientNameInputAlloti.value = '';
-                            recipientRoleInputAlloti.value = '';
-                        }
-                        
-                        // Afficher le premier destinataire si disponible
-                        if (recipientsAlloti.length > 0 && !viewAllMode) {
-                            renderInvitation(0);
-                            previewRecipientSelect.value = 0;
-                        } else {
-                            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
-                        }
-                    });
-                    
-                    actionsDiv.appendChild(editBtn);
-                    actionsDiv.appendChild(deleteBtn);
-                    
-                    recipientItem.appendChild(recipientInfo);
-                    recipientItem.appendChild(actionsDiv);
-                    recipientsListAlloti.appendChild(recipientItem);
-                });
-            }
-            
-            // Mettre à jour le sélecteur d'aperçu
-            function updatePreviewRecipientSelect() {
-                // Sauvegarder la valeur actuelle
-                const currentValue = previewRecipientSelect.value;
-                
-                // Supprimer toutes les options sauf "Voir tout"
-                while (previewRecipientSelect.children.length > 1) {
-                    previewRecipientSelect.removeChild(previewRecipientSelect.lastChild);
-                }
-                
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                
-                currentRecipients.forEach((recipient, index) => {
-                    const option = document.createElement('option');
-                    option.value = index;
-                    option.textContent = recipient.name;
-                    previewRecipientSelect.appendChild(option);
-                });
-                
-                // Restaurer la valeur si possible
-                if (currentValue !== "all" && currentRecipients[currentValue]) {
-                    previewRecipientSelect.value = currentValue;
-                } else if (currentRecipients.length > 0) {
+                // Afficher le premier destinataire si disponible
+                if (recipients.length > 0 && !viewAllMode) {
+                    renderInvitation(0);
                     previewRecipientSelect.value = 0;
                 } else {
-                    previewRecipientSelect.value = "all";
+                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
                 }
-            }
+            });
             
-            // Changer l'affichage lorsqu'un destinataire est sélectionné
-            previewRecipientSelect.addEventListener('change', function() {
-                if (this.value === "all") {
-                    viewAllMode = true;
-                    paginationDiv.style.display = 'flex';
-                    currentPage = 0;
-                    updatePagination();
-                    renderAllInvitations();
+            actionsDiv.appendChild(editBtn);
+            actionsDiv.appendChild(deleteBtn);
+            
+            recipientItem.appendChild(recipientInfo);
+            recipientItem.appendChild(actionsDiv);
+            recipientsList.appendChild(recipientItem);
+        });
+    }
+    
+    // Mettre à jour la liste des destinataires (Mode Alloti)
+    function updateRecipientsListAlloti() {
+        recipientsListAlloti.innerHTML = '';
+        
+        if (recipientsAlloti.length === 0) {
+            recipientsListAlloti.innerHTML = '<p style="text-align: center; padding: 20px; color: #666;">Aucun destinataire ajouté</p>';
+            return;
+        }
+        
+        recipientsAlloti.forEach((recipient, index) => {
+            const recipientItem = document.createElement('div');
+            recipientItem.className = 'recipient-item';
+            
+            const recipientInfo = document.createElement('div');
+            recipientInfo.className = 'recipient-info-small';
+            recipientInfo.innerHTML = `
+                <div class="recipient-name-small">${recipient.name}</div>
+                <div class="recipient-role-small">${recipient.role}</div>
+            `;
+            
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'recipient-actions';
+            
+            const editBtn = document.createElement('button');
+            editBtn.className = 'btn btn-warning btn-small';
+            editBtn.innerHTML = '<i class="fas fa-edit"></i>';
+            editBtn.title = 'Modifier';
+            editBtn.addEventListener('click', function() {
+                recipientNameInputAlloti.value = recipient.name;
+                recipientRoleInputAlloti.value = recipient.role;
+                editingIndexAlloti = index;
+                addRecipientBtnAlloti.textContent = 'Modifier Destinataire';
+                // Positionner le curseur sur le champ du nom
+                recipientNameInputAlloti.focus();
+                recipientNameInputAlloti.select();
+            });
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn btn-danger btn-small';
+            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
+            deleteBtn.title = 'Supprimer';
+            deleteBtn.addEventListener('click', function() {
+                recipientsAlloti.splice(index, 1);
+                updateRecipientsListAlloti();
+                updatePreviewRecipientSelect();
+                
+                // Si on supprime le destinataire en cours d'édition
+                if (editingIndexAlloti === index) {
+                    editingIndexAlloti = -1;
+                    addRecipientBtnAlloti.textContent = 'Ajouter Destinataire';
+                    recipientNameInputAlloti.value = '';
+                    recipientRoleInputAlloti.value = '';
+                }
+                
+                // Afficher le premier destinataire si disponible
+                if (recipientsAlloti.length > 0 && !viewAllMode) {
+                    renderInvitation(0);
+                    previewRecipientSelect.value = 0;
                 } else {
-                    viewAllMode = false;
-                    paginationDiv.style.display = 'none';
-                    const index = parseInt(this.value);
-                    renderInvitation(index);
+                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné. Veuillez ajouter des destinataires.</p>';
                 }
             });
             
-            // Navigation dans le mode "Voir tout"
-            prevPageBtn.addEventListener('click', function() {
-                if (currentPage > 0) {
-                    currentPage--;
-                    updatePagination();
-                    renderAllInvitations();
-                }
-            });
+            actionsDiv.appendChild(editBtn);
+            actionsDiv.appendChild(deleteBtn);
             
-            nextPageBtn.addEventListener('click', function() {
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                if (currentPage < Math.ceil(currentRecipients.length / 1) - 1) {
-                    currentPage++;
-                    updatePagination();
-                    renderAllInvitations();
-                }
-            });
-            
-            // Mettre à jour la pagination
-            function updatePagination() {
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                const totalPages = Math.ceil(currentRecipients.length / 1);
-                pageInfoSpan.textContent = `Page ${currentPage + 1} sur ${totalPages}`;
+            recipientItem.appendChild(recipientInfo);
+            recipientItem.appendChild(actionsDiv);
+            recipientsListAlloti.appendChild(recipientItem);
+        });
+    }
+    
+    // Mettre à jour le sélecteur d'aperçu
+    function updatePreviewRecipientSelect() {
+        // Sauvegarder la valeur actuelle
+        const currentValue = previewRecipientSelect.value;
+        
+        // Supprimer toutes les options sauf "Voir tout"
+        while (previewRecipientSelect.children.length > 1) {
+            previewRecipientSelect.removeChild(previewRecipientSelect.lastChild);
+        }
+        
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        
+        currentRecipients.forEach((recipient, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = recipient.name;
+            previewRecipientSelect.appendChild(option);
+        });
+        
+        // Restaurer la valeur si possible
+        if (currentValue !== "all" && currentRecipients[currentValue]) {
+            previewRecipientSelect.value = currentValue;
+        } else if (currentRecipients.length > 0) {
+            previewRecipientSelect.value = 0;
+        } else {
+            previewRecipientSelect.value = "all";
+        }
+    }
+    
+    // Changer l'affichage lorsqu'un destinataire est sélectionné
+    previewRecipientSelect.addEventListener('change', function() {
+        if (this.value === "all") {
+            viewAllMode = true;
+            paginationDiv.style.display = 'flex';
+            currentPage = 0;
+            updatePagination();
+            renderAllInvitations();
+        } else {
+            viewAllMode = false;
+            paginationDiv.style.display = 'none';
+            const index = parseInt(this.value);
+            renderInvitation(index);
+        }
+    });
+    
+    // Navigation dans le mode "Voir tout"
+    prevPageBtn.addEventListener('click', function() {
+        if (currentPage > 0) {
+            currentPage--;
+            updatePagination();
+            renderAllInvitations();
+        }
+    });
+    
+    nextPageBtn.addEventListener('click', function() {
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        if (currentPage < Math.ceil(currentRecipients.length / 1) - 1) {
+            currentPage++;
+            updatePagination();
+            renderAllInvitations();
+        }
+    });
+    
+    // Mettre à jour la pagination
+    function updatePagination() {
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        const totalPages = Math.ceil(currentRecipients.length / 1);
+        pageInfoSpan.textContent = `Page ${currentPage + 1} sur ${totalPages}`;
+        
+        prevPageBtn.disabled = currentPage === 0;
+        nextPageBtn.disabled = currentPage === totalPages - 1;
+    }
+    
+    // Visualiser tout (Mode Lot Unique)
+    viewAllBtn.addEventListener('click', function() {
+        if (recipients.length === 0) {
+            alert("Aucun destinataire à visualiser");
+            return;
+        }
+        
+        previewRecipientSelect.value = "all";
+        viewAllMode = true;
+        paginationDiv.style.display = 'flex';
+        currentPage = 0;
+        updatePagination();
+        renderAllInvitations();
+    });
+    
+    // Visualiser tout (Mode Alloti)
+    viewAllBtnAlloti.addEventListener('click', function() {
+        if (recipientsAlloti.length === 0) {
+            alert("Aucun destinataire à visualiser");
+            return;
+        }
+        
+        previewRecipientSelect.value = "all";
+        viewAllMode = true;
+        paginationDiv.style.display = 'flex';
+        currentPage = 0;
+        updatePagination();
+        renderAllInvitations();
+    });
+    
+    // Formater les lots
+    function formatLots(lotsString) {
+        // Nettoyer et trier les lots
+        const lotsArray = lotsString.split(',')
+            .map(lot => lot.trim())
+            .filter(lot => lot !== '')
+            .sort((a, b) => parseInt(a) - parseInt(b));
+        
+        // Vérifier les doublons
+        const uniqueLots = [...new Set(lotsArray)];
+        if (uniqueLots.length !== lotsArray.length) {
+            return { formatted: null, error: "Des lots en double ont été détectés. Veuillez corriger." };
+        }
+        
+        // Formater l'affichage
+        if (uniqueLots.length === 0) {
+            return { formatted: "", error: "Veuillez saisir au moins un lot" };
+        } else if (uniqueLots.length === 1) {
+            return { formatted: uniqueLots[0], error: null };
+        } else {
+            const lastLot = uniqueLots.pop();
+            return { formatted: `${uniqueLots.join(', ')} et ${lastLot}`, error: null };
+        }
+    }
+    
+    // Formater la date et l'heure
+    function formatDateTime(day, month, year, hour, minute) {
+        // Vérifier si l'heure est renseignée
+        const hasTime = hour && minute && hour !== '' && minute !== '';
+        
+        if (hasTime) {
+            return `${day}/${month}/${year} à ${hour}h${minute}`;
+        } else {
+            return `${day}/${month}/${year}`;
+        }
+    }
+    
+    // Rendu de l'invitation pour un destinataire
+    function renderInvitation(recipientIndex) {
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        
+        if (recipientIndex < 0 || recipientIndex >= currentRecipients.length) {
+            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné</p>';
+            return;
+        }
+        
+        const recipient = currentRecipients[recipientIndex];
+        
+        // Construire la référence complète
+        const reference = `Appel d'Offres Ouvert ${offerTypeInput.value} N° ${referenceInput.value}`;
+        const referenceAlloti = `Appel d'Offres Ouvert ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
+        
+        // Formater la date et l'heure
+        const dateTime = formatDateTime(dayInput.value, monthInput.value, yearInput.value, hourInput.value, minuteInput.value);
+        const dateTimeAlloti = formatDateTime(dayInputAlloti.value, monthInputAlloti.value, yearInputAlloti.value, hourInputAlloti.value, minuteInputAlloti.value);
+        
+        if (currentMode === 'lot-unique') {
+            // Mode Lot Unique
+            invitationDocument.innerHTML = `
+                <div class="document-header">
+                    <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
+                </div>
+                <br><br>
+               <p style="text-align:center; font-weight:bold; font-size:20px;">À</p>
+                <div class="document-content">
+                    <div class="recipient-info">
+                        <div class="recipient-name">${recipient.name}</div>
+                        <div class="recipient-role">${recipient.role}</div>
+                    </div>
+                    
+                    <div class="section-title">INVITATION</div>
+                    
+                    <div class="section-content">
+                        <p>Je vous demanderais de bien vouloir assister à la séance la conformité qui aura lieu le <span class="bold-text">${dateTime}</span> au ${locationInput.value}.</p>
+                    </div>
+                    
+                    <div class="section-title">ORDRE DU JOUR</div>
+                    
+                    <div class="section-content">
+                        <p>Examen ${examenTypeInput.value} concernant l'<span class="bold-text">${reference}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
+                    </div>
+                </div>
                 
-                prevPageBtn.disabled = currentPage === 0;
-                nextPageBtn.disabled = currentPage === totalPages - 1;
+                <div class="document-footer">
+                    <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
+                </div>
+            `;
+        } else {
+            // Mode Alloti
+            // Vérifier et formater les lots
+            const lotsResult = formatLots(lotsInput.value);
+            
+            if (lotsResult.error) {
+                lotsError.textContent = lotsResult.error;
+                lotsError.style.display = 'block';
+                globalError.textContent = lotsResult.error;
+                globalError.style.display = 'block';
+                invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Erreur dans la saisie des lots. Veuillez corriger avant de générer le document.</p>';
+                return;
+            } else {
+                lotsError.style.display = 'none';
+                globalError.style.display = 'none';
             }
             
-            // Visualiser tout (Mode Lot Unique)
-            viewAllBtn.addEventListener('click', function() {
-                if (recipients.length === 0) {
-                    alert("Aucun destinataire à visualiser");
-                    return;
-                }
+            invitationDocument.innerHTML = `
+                <div class="document-header">
+                    <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
+                </div>
+                <br><br>
+               <p style="text-align:center; font-weight:bold; font-size:20px;">À</p>
+                <div class="document-content">
+                    <div class="recipient-info">
+                        <div class="recipient-name">${recipient.name}</div>
+                        <div class="recipient-role">${recipient.role}</div>
+                    </div>
+                    
+                    <div class="section-title">INVITATION</div>
+                    
+                    <div class="section-content">
+                        <p>Je vous demanderais de bien vouloir assister à la séance d'examen ${examenTypeInputAlloti.value} des lots N° <span class="bold-text">${lotsResult.formatted}</span> qui aura lieu le <span class="bold-text">${dateTimeAlloti}</span> au ${locationInputAlloti.value}.</p>
+                    </div>
+                    
+                    <div class="section-title">ORDRE DU JOUR</div>
+                    
+                    <div class="section-content">
+                        <p>Examen ${examenTypeInputAlloti.value} concernant l'<span class="bold-text">${referenceAlloti}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
+                    </div>
+                </div>
                 
-                previewRecipientSelect.value = "all";
-                viewAllMode = true;
-                paginationDiv.style.display = 'flex';
-                currentPage = 0;
-                updatePagination();
-                renderAllInvitations();
-            });
-            
-            // Visualiser tout (Mode Alloti)
-            viewAllBtnAlloti.addEventListener('click', function() {
-                if (recipientsAlloti.length === 0) {
-                    alert("Aucun destinataire à visualiser");
-                    return;
-                }
-                
-                previewRecipientSelect.value = "all";
-                viewAllMode = true;
-                paginationDiv.style.display = 'flex';
-                currentPage = 0;
-                updatePagination();
-                renderAllInvitations();
-            });
-            
-            // Formater les lots
-            function formatLots(lotsString) {
-                // Nettoyer et trier les lots
-                const lotsArray = lotsString.split(',')
-                    .map(lot => lot.trim())
-                    .filter(lot => lot !== '')
-                    .sort((a, b) => parseInt(a) - parseInt(b));
-                
-                // Vérifier les doublons
-                const uniqueLots = [...new Set(lotsArray)];
-                if (uniqueLots.length !== lotsArray.length) {
-                    return { formatted: null, error: "Des lots en double ont été détectés. Veuillez corriger." };
-                }
-                
-                // Formater l'affichage
-                if (uniqueLots.length === 0) {
-                    return { formatted: "", error: "Veuillez saisir au moins un lot" };
-                } else if (uniqueLots.length === 1) {
-                    return { formatted: uniqueLots[0], error: null };
-                } else {
-                    const lastLot = uniqueLots.pop();
-                    return { formatted: `${uniqueLots.join(', ')} et ${lastLot}`, error: null };
-                }
+                <div class="document-footer">
+                    <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
+                </div>
+            `;
+        }
+    }
+    
+    // Rendu de toutes les invitations (mode pagination)
+    function renderAllInvitations() {
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        
+        if (currentRecipients.length === 0) {
+            invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire à afficher</p>';
+            return;
+        }
+        
+        // Pour le mode Alloti, vérifier d'abord les lots
+        if (currentMode === 'alloti') {
+            const lotsResult = formatLots(lotsInput.value);
+            if (lotsResult.error) {
+                lotsError.textContent = lotsResult.error;
+                lotsError.style.display = 'block';
+                globalError.textContent = lotsResult.error;
+                globalError.style.display = 'block';
+                invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Erreur dans la saisie des lots. Veuillez corriger avant de générer le document.</p>';
+                return;
+            } else {
+                lotsError.style.display = 'none';
+                globalError.style.display = 'none';
             }
+        }
+        
+        let content = '';
+        const startIndex = currentPage * 1;
+        const endIndex = Math.min(startIndex + 1, currentRecipients.length);
+        
+        // Construire les références
+        const reference = `Appel d'Offres Ouvert ${offerTypeInput.value} N° ${referenceInput.value}`;
+        const referenceAlloti = `Appel d'Offres Ouvert ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
+        
+        // Formater la date et l'heure
+        const dateTime = formatDateTime(dayInput.value, monthInput.value, yearInput.value, hourInput.value, minuteInput.value);
+        const dateTimeAlloti = formatDateTime(dayInputAlloti.value, monthInputAlloti.value, yearInputAlloti.value, hourInputAlloti.value, minuteInputAlloti.value);
+        
+        for (let i = startIndex; i < endIndex; i++) {
+            const recipient = currentRecipients[i];
             
-            // Formater la date et l'heure
-            function formatDateTime(day, month, year, hour, minute) {
-                // Vérifier si l'heure est renseignée
-                const hasTime = hour && minute && hour !== '' && minute !== '';
-                
-                if (hasTime) {
-                    return `${day}/${month}/${year} à ${hour}h${minute}`;
-                } else {
-                    return `${day}/${month}/${year}`;
-                }
-            }
-            
-            // Rendu de l'invitation pour un destinataire
-            function renderInvitation(recipientIndex) {
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                
-                if (recipientIndex < 0 || recipientIndex >= currentRecipients.length) {
-                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire sélectionné</p>';
-                    return;
-                }
-                
-                const recipient = currentRecipients[recipientIndex];
-                
-                // Construire la référence complète
-                const reference = `Appel d'Offres Ouvert ${offerTypeInput.value} N° ${referenceInput.value}`;
-                const referenceAlloti = `Appel d'Offres Ouvert ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
-                
-                // Formater la date et l'heure
-                const dateTime = formatDateTime(dayInput.value, monthInput.value, yearInput.value, hourInput.value, minuteInput.value);
-                const dateTimeAlloti = formatDateTime(dayInputAlloti.value, monthInputAlloti.value, yearInputAlloti.value, hourInputAlloti.value, minuteInputAlloti.value);
-                
-                if (currentMode === 'lot-unique') {
-                    // Mode Lot Unique
-                    invitationDocument.innerHTML = `
-                        <div class="document-header">
-                            <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
-                        </div>
-                        <br><br>
-                       <p style="text-align:center; font-weight:bold; font-size:20px;">À</p>
-                        <div class="document-content">
-                            <div class="recipient-info">
-                                <div class="recipient-name">${recipient.name}</div>
-                                <div class="recipient-role">${recipient.role}</div>
-                            </div>
-                            
-                            <div class="section-title">INVITATION</div>
-                            
-                            <div class="section-content">
-                                <p>Je vous demanderais de bien vouloir assister à la séance la conformité qui aura lieu le <span class="bold-text">${dateTime}</span> au ${locationInput.value}.</p>
-                            </div>
-                            
-                            <div class="section-title">ORDRE DU JOUR</div>
-                            
-                            <div class="section-content">
-                                <p>Examen ${examenTypeInput.value} concernant l'<span class="bold-text">${reference}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
-                            </div>
+            if (currentMode === 'lot-unique') {
+                // Mode Lot Unique
+                content += `
+                    <div class="document-header">
+                        <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
+                    </div>
+                    
+                    <div class="document-content">
+                        <div class="recipient-info">
+                            <div class="recipient-name">${recipient.name}</div>
+                            <div class="recipient-role">${recipient.role}</div>
                         </div>
                         
-                        <div class="document-footer">
-                            <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
-                        </div>
-                    `;
-                } else {
-                    // Mode Alloti
-                    // Vérifier et formater les lots
-                    const lotsResult = formatLots(lotsInput.value);
-                    
-                    if (lotsResult.error) {
-                        lotsError.textContent = lotsResult.error;
-                        lotsError.style.display = 'block';
-                        globalError.textContent = lotsResult.error;
-                        globalError.style.display = 'block';
-                        invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Erreur dans la saisie des lots. Veuillez corriger avant de générer le document.</p>';
-                        return;
-                    } else {
-                        lotsError.style.display = 'none';
-                        globalError.style.display = 'none';
-                    }
-                    
-                    invitationDocument.innerHTML = `
-                        <div class="document-header">
-                            <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
-                        </div>
-                        <br><br>
-                       <p style="text-align:center; font-weight:bold; font-size:20px;">À</p>
-                        <div class="document-content">
-                            <div class="recipient-info">
-                                <div class="recipient-name">${recipient.name}</div>
-                                <div class="recipient-role">${recipient.role}</div>
-                            </div>
-                            
-                            <div class="section-title">INVITATION</div>
-                            
-                            <div class="section-content">
-                                <p>Je vous demanderais de bien vouloir assister à la séance d'examen ${examenTypeInputAlloti.value} des lots N° <span class="bold-text">${lotsResult.formatted}</span> qui aura lieu le <span class="bold-text">${dateTimeAlloti}</span> au ${locationInputAlloti.value}.</p>
-                            </div>
-                            
-                            <div class="section-title">ORDRE DU JOUR</div>
-                            
-                            <div class="section-content">
-                                <p>Examen ${examenTypeInputAlloti.value} concernant l'<span class="bold-text">${referenceAlloti}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
-                            </div>
+                        <div class="section-title">INVITATION</div>
+                        
+                        <div class="section-content">
+                            <p>Je vous demanderais de bien vouloir assister à la séance la conformité qui aura lieu le <span class="bold-text">${dateTime}</span> au ${locationInput.value}.</p>
                         </div>
                         
-                        <div class="document-footer">
-                            <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
-                        </div>
-                    `;
-                }
-            }
-            
-            // Rendu de toutes les invitations (mode pagination)
-            function renderAllInvitations() {
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                
-                if (currentRecipients.length === 0) {
-                    invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Aucun destinataire à afficher</p>';
-                    return;
-                }
-                
-                // Pour le mode Alloti, vérifier d'abord les lots
-                if (currentMode === 'alloti') {
-                    const lotsResult = formatLots(lotsInput.value);
-                    if (lotsResult.error) {
-                        lotsError.textContent = lotsResult.error;
-                        lotsError.style.display = 'block';
-                        globalError.textContent = lotsResult.error;
-                        globalError.style.display = 'block';
-                        invitationDocument.innerHTML = '<p style="text-align: center; margin-top: 50px;">Erreur dans la saisie des lots. Veuillez corriger avant de générer le document.</p>';
-                        return;
-                    } else {
-                        lotsError.style.display = 'none';
-                        globalError.style.display = 'none';
-                    }
-                }
-                
-                let content = '';
-                const startIndex = currentPage * 1;
-                const endIndex = Math.min(startIndex + 1, currentRecipients.length);
-                
-                // Construire les références
-                const reference = `Appel d'Offres Ouvert ${offerTypeInput.value} N° ${referenceInput.value}`;
-                const referenceAlloti = `Appel d'Offres Ouvert ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
-                
-                // Formater la date et l'heure
-                const dateTime = formatDateTime(dayInput.value, monthInput.value, yearInput.value, hourInput.value, minuteInput.value);
-                const dateTimeAlloti = formatDateTime(dayInputAlloti.value, monthInputAlloti.value, yearInputAlloti.value, hourInputAlloti.value, minuteInputAlloti.value);
-                
-                for (let i = startIndex; i < endIndex; i++) {
-                    const recipient = currentRecipients[i];
-                    
-                    if (currentMode === 'lot-unique') {
-                        // Mode Lot Unique
-                        content += `
-                            <div class="document-header">
-                                <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
-                            </div>
-                            
-                            <div class="document-content">
-                                <div class="recipient-info">
-                                    <div class="recipient-name">${recipient.name}</div>
-                                    <div class="recipient-role">${recipient.role}</div>
-                                </div>
-                                
-                                <div class="section-title">INVITATION</div>
-                                
-                                <div class="section-content">
-                                    <p>Je vous demanderais de bien vouloir assister à la séance la conformité qui aura lieu le <span class="bold-text">${dateTime}</span> au ${locationInput.value}.</p>
-                                </div>
-                                
-                                <div class="section-title">ORDRE DU JOUR</div>
-                                
-                                <div class="section-content">
-                                    <p>Examen ${examenTypeInput.value} concernant l'<span class="bold-text">${reference}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
-                                </div>
-                            </div>
-                            
-                            <div class="document-footer">
-                                <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
-                            </div>
-                        `;
-                    } else {
-                        // Mode Alloti
-                        const lotsResult = formatLots(lotsInput.value);
+                        <div class="section-title">ORDRE DU JOUR</div>
                         
-                        content += `
-                            <div class="document-header">
-                                <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
-                            </div>
-                            
-                            <div class="document-content">
-                                <div class="recipient-info">
-                                    <div class="recipient-name">${recipient.name}</div>
-                                    <div class="recipient-role">${recipient.role}</div>
-                                </div>
-                                
-                                <div class="section-title">INVITATION</div>
-                                
-                                <div class="section-content">
-                                    <p>Je vous demanderais de bien vouloir assister à la séance d'examen ${examenTypeInputAlloti.value} des lots N° <span class="bold-text">${lotsResult.formatted}</span> qui aura lieu le <span class="bold-text">${dateTimeAlloti}</span> au ${locationInputAlloti.value}.</p>
-                                </div>
-                                
-                                <div class="section-title">ORDRE DU JOUR</div>
-                                
-                                <div class="section-content">
-                                    <p>Examen ${examenTypeInputAlloti.value} concernant l'<span class="bold-text">${referenceAlloti}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
-                                </div>
-                            </div>
-                            
-                            <div class="document-footer">
-                                <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
-                            </div>
-                        `;
-                    }
-                }
+                        <div class="section-content">
+                            <p>Examen ${examenTypeInput.value} concernant l'<span class="bold-text">${reference}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
+                        </div>
+                    </div>
+                    
+                    <div class="document-footer">
+                        <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
+                    </div>
+                `;
+            } else {
+                // Mode Alloti
+                const lotsResult = formatLots(lotsInput.value);
                 
-                invitationDocument.innerHTML = content;
+                content += `
+                    <div class="document-header">
+                        <img src="https://static.wixstatic.com/media/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png/v1/fill/w_1429,h_176,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_99f7a17eea9e4456a26645e79509a76d~mv2.png" alt="Logo en-tête">
+                    </div>
+                    
+                    <div class="document-content">
+                        <div class="recipient-info">
+                            <div class="recipient-name">${recipient.name}</div>
+                            <div class="recipient-role">${recipient.role}</div>
+                        </div>
+                        
+                        <div class="section-title">INVITATION</div>
+                        
+                        <div class="section-content">
+                            <p>Je vous demanderais de bien vouloir assister à la séance d'examen ${examenTypeInputAlloti.value} des lots N° <span class="bold-text">${lotsResult.formatted}</span> qui aura lieu le <span class="bold-text">${dateTimeAlloti}</span> au ${locationInputAlloti.value}.</p>
+                        </div>
+                        
+                        <div class="section-title">ORDRE DU JOUR</div>
+                        
+                        <div class="section-content">
+                            <p>Examen ${examenTypeInputAlloti.value} concernant l'<span class="bold-text">${referenceAlloti}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
+                        </div>
+                    </div>
+                    
+                    <div class="document-footer">
+                        <img src="https://static.wixstatic.com/media/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png/v1/fill/w_1480,h_152,al_c,lg_1,q_85,enc_avif,quality_auto/54eb1f_9d983c91a6c34ea1b871e7a357691871~mv2.png" alt="Logo pied de page">
+                    </div>
+                `;
             }
+        }
+        
+        invitationDocument.innerHTML = content;
+    }
+    
+    // Générer un PDF pour le destinataire actuel
+    generatePdfBtn.addEventListener('click', function() {
+        if (viewAllMode) {
+            // Générer tous les PDF en mode "Voir tout"
+            generateAllPdfs();
+        } else {
+            const recipientIndex = parseInt(previewRecipientSelect.value);
             
-            // Générer un PDF pour le destinataire actuel
-            generatePdfBtn.addEventListener('click', function() {
-                if (viewAllMode) {
-                    // Générer tous les PDF en mode "Voir tout"
-                    generateAllPdfs();
-                } else {
-                    const recipientIndex = parseInt(previewRecipientSelect.value);
-                    
-                    // Pour le mode Alloti, vérifier d'abord les lots
-                    if (currentMode === 'alloti') {
-                        const lotsResult = formatLots(lotsInput.value);
-                        if (lotsResult.error) {
-                            lotsError.textContent = lotsResult.error;
-                            lotsError.style.display = 'block';
-                            globalError.textContent = lotsResult.error;
-                            globalError.style.display = 'block';
-                            alert("Impossible de générer le PDF : " + lotsResult.error);
-                            return;
-                        }
-                    }
-                    
-                    generatePdf(recipientIndex);
-                }
-            });
-            
-            // Générer tous les PDF (Mode Lot Unique)
-            generateAllPdfBtn.addEventListener('click', function() {
-                generateAllPdfs();
-            });
-            
-            // Générer tous les PDF (Mode Alloti)
-            generateAllPdfBtnAlloti.addEventListener('click', function() {
-                // Vérifier d'abord les lots
+            // Pour le mode Alloti, vérifier d'abord les lots
+            if (currentMode === 'alloti') {
                 const lotsResult = formatLots(lotsInput.value);
                 if (lotsResult.error) {
                     lotsError.textContent = lotsResult.error;
                     lotsError.style.display = 'block';
                     globalError.textContent = lotsResult.error;
                     globalError.style.display = 'block';
-                    alert("Impossible de générer les PDF : " + lotsResult.error);
+                    alert("Impossible de générer le PDF : " + lotsResult.error);
                     return;
                 }
-                
-                generateAllPdfs();
-            });
-            
-            // Fonction pour générer tous les PDF
-            function generateAllPdfs() {
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                
-                if (currentRecipients.length === 0) {
-                    alert("Aucun destinataire à exporter");
-                    return;
-                }
-                
-                // Créer un seul PDF avec toutes les pages
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const fileName = `convocation sous commission DAO N° ${currentMode === 'lot-unique' ? referenceInput.value : referenceInputAlloti.value}.pdf`;
-                
-                // Fonction récursive pour ajouter chaque page
-                function addPageToPdf(index) {
-                    if (index >= currentRecipients.length) {
-                        // Toutes les pages ont été ajoutées, télécharger le PDF
-                        pdf.save(fileName);
-                        return;
-                    }
-                    
-                    // Rendre l'invitation pour ce destinataire
-                    const originalMode = viewAllMode;
-                    viewAllMode = false;
-                    renderInvitation(index);
-                    
-                    setTimeout(() => {
-                        const element = document.getElementById('invitationDocument');
-                        
-                        html2canvas(element, {
-                            scale: 2,
-                            useCORS: true,
-                            logging: false
-                        }).then(canvas => {
-                            const imgData = canvas.toDataURL('image/png');
-                            const imgWidth = 210;
-                            const imgHeight = canvas.height * imgWidth / canvas.width;
-                            
-                            // Ajouter une nouvelle page si ce n'est pas la première
-                            if (index > 0) {
-                                pdf.addPage();
-                            }
-                            
-                            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-                            
-                            // Passer au destinataire suivant
-                            addPageToPdf(index + 1);
-                        });
-                        
-                        // Restaurer le mode d'affichage
-                        viewAllMode = originalMode;
-                        if (viewAllMode) {
-                            renderAllInvitations();
-                        }
-                    }, 500);
-                }
-                
-                // Commencer à ajouter les pages
-                addPageToPdf(0);
             }
             
-            // Fonction pour générer un PDF
-            function generatePdf(recipientIndex) {
-                const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
-                
-                if (recipientIndex < 0 || recipientIndex >= currentRecipients.length) return;
-                
-                // Rendre l'invitation pour ce destinataire
-                renderInvitation(recipientIndex);
-                
-                setTimeout(() => {
-                    const element = document.getElementById('invitationDocument');
-                    const recipient = currentRecipients[recipientIndex];
-                    
-                    html2canvas(element, {
-                        scale: 2,
-                        useCORS: true,
-                        logging: false
-                    }).then(canvas => {
-                        const imgData = canvas.toDataURL('image/png');
-                        const pdf = new jsPDF('p', 'mm', 'a4');
-                        const imgWidth = 210;
-                        const pageHeight = 295;
-                        const imgHeight = canvas.height * imgWidth / canvas.width;
-                        let heightLeft = imgHeight;
-                        let position = 0;
-                        
-                        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                        heightLeft -= pageHeight;
-                        
-                        while (heightLeft >= 0) {
-                            position = heightLeft - imgHeight;
-                            pdf.addPage();
-                            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-                            heightLeft -= pageHeight;
-                        }
-                        
-                        // Télécharger le PDF
-                        pdf.save(`Invitation_${recipient.name.replace(/\s+/g, '_')}.pdf`);
-                    });
-                }, 500);
-            }
-            
-            // Validation des lots en temps réel
-            lotsInput.addEventListener('input', function() {
-                const lotsResult = formatLots(this.value);
-                if (lotsResult.error) {
-                    lotsError.textContent = lotsResult.error;
-                    lotsError.style.display = 'block';
-                    globalError.textContent = lotsResult.error;
-                    globalError.style.display = 'block';
-                } else {
-                    lotsError.style.display = 'none';
-                    globalError.style.display = 'none';
-                    
-                    // Mettre à jour l'aperçu si on est en mode Alloti
-                    if (currentMode === 'alloti' && !viewAllMode) {
-                        const index = parseInt(previewRecipientSelect.value);
-                        if (!isNaN(index)) {
-                            renderInvitation(index);
-                        }
-                    }
-                }
-            });
-            
-            // Mettre à jour l'aperçu lorsque les champs de date changent
-            [dayInput, monthInput, yearInput, hourInput, minuteInput].forEach(input => {
-                input.addEventListener('input', function() {
-                    if (currentMode === 'lot-unique' && !viewAllMode) {
-                        const index = parseInt(previewRecipientSelect.value);
-                        if (!isNaN(index)) {
-                            renderInvitation(index);
-                        }
-                    }
-                });
-            });
-            
-            [dayInputAlloti, monthInputAlloti, yearInputAlloti, hourInputAlloti, minuteInputAlloti].forEach(input => {
-                input.addEventListener('input', function() {
-                    if (currentMode === 'alloti' && !viewAllMode) {
-                        const index = parseInt(previewRecipientSelect.value);
-                        if (!isNaN(index)) {
-                            renderInvitation(index);
-                        }
-                    }
-                });
-            });
-
-            // Initialiser le mode par défaut
-            btnLotUnique.click();
+            generatePdf(recipientIndex);
         }
+    });
+    
+    // Générer tous les PDF (Mode Lot Unique)
+    generateAllPdfBtn.addEventListener('click', function() {
+        generateAllPdfs();
+    });
+    
+    // Générer tous les PDF (Mode Alloti)
+    generateAllPdfBtnAlloti.addEventListener('click', function() {
+        // Vérifier d'abord les lots
+        const lotsResult = formatLots(lotsInput.value);
+        if (lotsResult.error) {
+            lotsError.textContent = lotsResult.error;
+            lotsError.style.display = 'block';
+            globalError.textContent = lotsResult.error;
+            globalError.style.display = 'block';
+            alert("Impossible de générer les PDF : " + lotsResult.error);
+            return;
+        }
+        
+        generateAllPdfs();
+    });
+    
+    // Fonction pour générer tous les PDF
+    function generateAllPdfs() {
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        
+        if (currentRecipients.length === 0) {
+            alert("Aucun destinataire à exporter");
+            return;
+        }
+        
+        // Créer un seul PDF avec toutes les pages
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const fileName = `convocation sous commission DAO N° ${currentMode === 'lot-unique' ? referenceInput.value : referenceInputAlloti.value}.pdf`;
+        
+        // Fonction récursive pour ajouter chaque page
+        function addPageToPdf(index) {
+            if (index >= currentRecipients.length) {
+                // Toutes les pages ont été ajoutées, télécharger le PDF
+                pdf.save(fileName);
+                return;
+            }
+            
+            // Rendre l'invitation pour ce destinataire
+            const originalMode = viewAllMode;
+            viewAllMode = false;
+            renderInvitation(index);
+            
+            setTimeout(() => {
+                const element = document.getElementById('invitationDocument');
+                
+                html2canvas(element, {
+                    scale: 2,
+                    useCORS: true,
+                    logging: false
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const imgWidth = 210;
+                    const imgHeight = canvas.height * imgWidth / canvas.width;
+                    
+                    // Ajouter une nouvelle page si ce n'est pas la première
+                    if (index > 0) {
+                        pdf.addPage();
+                    }
+                    
+                    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                    
+                    // Passer au destinataire suivant
+                    addPageToPdf(index + 1);
+                });
+                
+                // Restaurer le mode d'affichage
+                viewAllMode = originalMode;
+                if (viewAllMode) {
+                    renderAllInvitations();
+                }
+            }, 500);
+        }
+        
+        // Commencer à ajouter les pages
+        addPageToPdf(0);
+    }
+    
+    // Fonction pour générer un PDF
+    function generatePdf(recipientIndex) {
+        const currentRecipients = currentMode === 'lot-unique' ? recipients : recipientsAlloti;
+        
+        if (recipientIndex < 0 || recipientIndex >= currentRecipients.length) return;
+        
+        // Rendre l'invitation pour ce destinataire
+        renderInvitation(recipientIndex);
+        
+        setTimeout(() => {
+            const element = document.getElementById('invitationDocument');
+            const recipient = currentRecipients[recipientIndex];
+            
+            html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                // Télécharger le PDF
+                pdf.save(`Invitation_${recipient.name.replace(/\s+/g, '_')}.pdf`);
+            });
+        }, 500);
+    }
+    
+    // Validation des lots en temps réel
+    lotsInput.addEventListener('input', function() {
+        const lotsResult = formatLots(this.value);
+        if (lotsResult.error) {
+            lotsError.textContent = lotsResult.error;
+            lotsError.style.display = 'block';
+            globalError.textContent = lotsResult.error;
+            globalError.style.display = 'block';
+        } else {
+            lotsError.style.display = 'none';
+            globalError.style.display = 'none';
+            
+            // Mettre à jour l'aperçu si on est en mode Alloti
+            if (currentMode === 'alloti' && !viewAllMode) {
+                const index = parseInt(previewRecipientSelect.value);
+                if (!isNaN(index)) {
+                    renderInvitation(index);
+                }
+            }
+        }
+    });
+    
+    // Mettre à jour l'aperçu lorsque les champs de date changent
+    [dayInput, monthInput, yearInput, hourInput, minuteInput].forEach(input => {
+        input.addEventListener('input', function() {
+            if (currentMode === 'lot-unique' && !viewAllMode) {
+                const index = parseInt(previewRecipientSelect.value);
+                if (!isNaN(index)) {
+                    renderInvitation(index);
+                }
+            }
+        });
+    });
+    
+    [dayInputAlloti, monthInputAlloti, yearInputAlloti, hourInputAlloti, minuteInputAlloti].forEach(input => {
+        input.addEventListener('input', function() {
+            if (currentMode === 'alloti' && !viewAllMode) {
+                const index = parseInt(previewRecipientSelect.value);
+                if (!isNaN(index)) {
+                    renderInvitation(index);
+                }
+            }
+        });
+    });
+
+    // Appeler l'initialisation des composants
+    initializeInvitationComponents();
+
+    // Initialiser le mode par défaut
+    btnLotUnique.click();
+}
 
         // --- FONCTIONS D'INITIALISATION ET LOGIQUE POUR CHAQUE FORMULAIRE ---
 
