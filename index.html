@@ -1771,14 +1771,14 @@
                         
                         <div class="form-group">
                             <label for="object">Objet du Marché:</label>
-                            <textarea id="object">ACHAT DE FOURNITURE DE COUCHAGE DESTINEE AU CENTRE HOSPITALO-UNIVERSITAIRE SOUSS MASSA (Lot Unique)</textarea>
+                            <textarea id="object">Veuillez saisir l'objet de l'appel d'offres</textarea>
                         </div>
                         
                         <div class="form-group">
                             <label for="offerType">Type d'Appel d'Offres:</label>
                             <select id="offerType">
-                                <option value="National">National</option>
-                                <option value="International" selected>International</option>
+                                <option value="national">national</option>
+                                <option value="international" selected>international</option>
                             </select>
                         </div>
                         
@@ -1876,14 +1876,14 @@
                         
                         <div class="form-group">
                             <label for="objectAlloti">Objet du Marché:</label>
-                            <textarea id="objectAlloti">ACHAT DE FOURNITURE DE COUCHAGE DESTINEE AU CENTRE HOSPITALO-UNIVERSITAIRE SOUSS MASSA</textarea>
+                            <textarea id="objectAlloti">Veuillez saisir l'objet de l'appel d'offres</textarea>
                         </div>
                         
                         <div class="form-group">
                             <label for="offerTypeAlloti">Type d'Appel d'Offres:</label>
                             <select id="offerTypeAlloti">
-                                <option value="National">National</option>
-                                <option value="International" selected>International</option>
+                                <option value="national">national</option>
+                                <option value="international" selected>international</option>
                             </select>
                         </div>
                         
@@ -2795,8 +2795,8 @@
         const recipient = currentRecipients[recipientIndex];
         
         // Construire la référence complète
-        const reference = `Appel d'Offres Ouvert ${offerTypeInput.value} N° ${referenceInput.value}`;
-        const referenceAlloti = `Appel d'Offres Ouvert ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
+        const reference = ` ${offerTypeInput.value} N° ${referenceInput.value}`;
+        const referenceAlloti = ` ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
         
         // Formater la date et l'heure
         const dateTime = formatDateTime(dayInput.value, monthInput.value, yearInput.value, hourInput.value, minuteInput.value);
@@ -2825,7 +2825,7 @@
                     <div class="section-title">ORDRE DU JOUR</div>
                     
                     <div class="section-content">
-                        <p><b><i>  E</i></b>xamen ${examenTypeInput.value} concernant l'<span class="bold-text">${reference}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
+                        <p><b><i>  E</i></b>xamen ${examenTypeInput.value} concernant l'appel d'offres ouvert ${offerTypeInput.value} <span class="bold-text"> N° ${referenceInput.value}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
                     </div>
                 </div>
                 
@@ -2871,7 +2871,7 @@
                     <div class="section-title">ORDRE DU JOUR</div>
                     
                     <div class="section-content">
-                        <p><b><i>  E</i></b>xamen ${examenTypeInputAlloti.value} concernant l'<span class="bold-text">${referenceAlloti}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
+                        <p><b><i>  E</i></b>xamen ${examenTypeInputAlloti.value} concernant l'appel d'offres ouvert ${offerTypeInputAlloti.value} <span class="bold-text"> N° ${referenceInputAlloti.value}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
                     </div>
                 </div>
                 
@@ -2912,8 +2912,8 @@
         const endIndex = Math.min(startIndex + 1, currentRecipients.length);
         
         // Construire les références
-        const reference = `Appel d'Offres Ouvert ${offerTypeInput.value} N° ${referenceInput.value}`;
-        const referenceAlloti = `Appel d'Offres Ouvert ${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
+        const reference = ` ${offerTypeInput.value} N° ${referenceInput.value}`;
+        const referenceAlloti = `${offerTypeInputAlloti.value} N° ${referenceInputAlloti.value}`;
         
         // Formater la date et l'heure
         const dateTime = formatDateTime(dayInput.value, monthInput.value, yearInput.value, hourInput.value, minuteInput.value);
@@ -2944,8 +2944,8 @@
                         <div class="section-title">ORDRE DU JOUR</div>
                         
                         <div class="section-content">
-                            <p><b><i>  E</i></b>xamen ${examenTypeInput.value} concernant l'<span class="bold-text">${reference}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
-                        </div>
+                            <p><b><i>  E</i></b>xamen ${examenTypeInput.value} concernant l'appel d'offres ouvert ${offerTypeInput.value} <span class="bold-text"> N° ${referenceInput.value}</span> relatif à : « <span class="bold-text">${objectInput.value}</span> ».</p>
+                    </div>
                     </div>
                     
                     <div class="document-footer">
@@ -2976,8 +2976,8 @@
                         <div class="section-title">ORDRE DU JOUR</div>
                         
                         <div class="section-content">
-                            <p><b><i>  E</i></b>xamen ${examenTypeInputAlloti.value} concernant l'<span class="bold-text">${referenceAlloti}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
-                        </div>
+                            <p><b><i>  E</i></b>xamen ${examenTypeInputAlloti.value} concernant l'appel d'offres ouvert ${offerTypeInputAlloti.value} <span class="bold-text"> N° ${referenceInputAlloti.value}</span> relatif à : « <span class="bold-text">${objectInputAlloti.value}</span> ».</p>
+                    </div>
                     </div>
                     
                     <div class="document-footer">
@@ -3254,8 +3254,8 @@
             typeContainer.innerHTML = `
                 <label for="convocationType">Type d'appel d'offres :</label>
                 <select id="convocationType" required>
-                    <option value="national">National</option>
-                    <option value="international">International</option>
+                    <option value="national">national</option>
+                    <option value="international">international</option>
                 </select>
             `;
             
